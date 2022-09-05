@@ -20,7 +20,8 @@ class User (Base):
 
 class Character (Base):
     __tablename__ = 'character'
-    id = Column(Integer, primary_key=True) 
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
     name = Column(String(40), nullable=False) #The name of this person.
     birth_year  = Column(Integer, nullable=False) #The birth year of the person.
     eye_color  = Column(String(20), nullable=False) #The eye color of this person.
@@ -35,6 +36,7 @@ class Character (Base):
 class Planet (Base):
     __tablename__ = 'planet'
     id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
     name = Column(String(40), nullable=False) #The name of this planet.
     diameter  = Column(Integer, nullable=False) #The diameter of this planet in kilometers.
     rotation_period = Column(Integer, nullable=False) #The number of standard hours it takes for this planet to complete a single rotation on its axis.
@@ -50,6 +52,7 @@ class Planet (Base):
 class Starship (Base):
     __tablename__ = 'starship'
     id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('user.id'), primary_key=True)
     name = Column(String(40), nullable=False) #The name of this starship.
     model  = Column(String(40), nullable=False) #The model or official name of this starship.
     starship_class = Column(String(40), nullable=False) #The class of this starship.
@@ -61,6 +64,13 @@ class Starship (Base):
     max_atmosphering_speed = Column(Integer, nullable=False) #The maximum speed of this starship in the atmosphere.
     hyperdrive_rating = Column(Integer, nullable=False) #The class of this starships hyperdrive.
     cargo_capacity = Column(Integer, nullable=False) #The maximum number of kilograms that this starship can transport.
+
+class Favorite (Base):
+    __tablename__ = 'favorite'
+    id = Column(Integer, primary_key=True)
+    character_id = Column(Integer,ForeignKey('character.id'), nullable=True)
+    planet_id = Column(Integer,ForeignKey('planet.id'), nullable=True)
+    starship_id = Column(Integer,ForeignKey('starship.id'), nullable=True)
 
 
 
